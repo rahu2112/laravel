@@ -13,13 +13,13 @@ class Expense extends Model
     protected $table = 'expenses';
 
     protected $fillable = [
-        'userid',
-        'todaydate',
+        'user_id',
+        'today_date',
         'description',
         'category',
         'amount',
-        'totalbalance',
-        'totalincome',
+        'total_balance',
+        'total_income',
         'note',
         'source',
         'from_date',

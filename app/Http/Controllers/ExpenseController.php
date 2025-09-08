@@ -10,36 +10,39 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+        $user_id = Auth::id();
 
-        $userid = Auth::id();
-
-        $totalincome = Expense::where('user_id', $userid)
+        // total income
+        $total_income = Expense::where('user_id', $user_id)
             ->where('category', 'Income')
             ->sum('amount');
 
-        $totalexpense = Expense::where('user_id', $userid)
+        // total expense (exclude income)
+        $total_expense = Expense::where('user_id', $user_id)
             ->where('category', '!=', 'Income')
             ->sum('amount');
 
-        $totalbalance = $totalincome - $totalexpense;
+        // total balance
+        $total_balance = $total_income - $total_expense;
 
-        $currentmonthexpenses = Expense::where('user_id', $userid)
+        // current month expenses
+        $currentmonthexpenses = Expense::where('user_id', $user_id)
             ->whereMonth('today_date', now()->month)
             ->whereYear('today_date', now()->year)
+            ->orderBy('today_date', 'desc')
             ->get();
 
-        $lastmonthexpenses = Expense::where('user_id', $userid)
+        // last month expenses
+        $lastmonthexpenses = Expense::where('user_id', $user_id)
             ->whereMonth('today_date', now()->subMonth()->month)
             ->whereYear('today_date', now()->subMonth()->year)
+            ->orderBy('today_date', 'desc')
             ->get();
 
         return view('index', compact(
-            'totalbalance',
-            'totalincome',
-            'totalexpense',
+            'total_balance',
+            'total_income',
+            'total_expense',
             'currentmonthexpenses',
             'lastmonthexpenses'
         ));

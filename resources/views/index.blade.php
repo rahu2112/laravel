@@ -14,16 +14,48 @@
         <div class="row text-center mb-4">
             <div class="col-md-4">
                 <h5>Total Balance</h5>
-                <h3 class="text-success">${{ number_format($totalbalance, 2) }}</h3>
+                <h3 class="text-success">${{ number_format($total_balance, 2) }}</h3>
             </div>
             <div class="col-md-4">
                 <h5>Total Income</h5>
-                <h3 class="text-primary">${{ number_format($totalincome, 2) }}</h3>
+                <h3 class="text-primary">${{ number_format($total_income, 2) }}</h3>
             </div>
             <div class="col-md-4">
                 <h5>Total Expense</h5>
-                <h3 class="text-danger">${{ number_format($totalexpense, 2) }}</h3>
+                <h3 class="text-danger">${{ number_format($total_expense, 2) }}</h3>
             </div>
+        </div>
+
+        <!-- Add Expense/Income Form -->
+        <div class="mb-5">
+            <h5>Add New Transaction</h5>
+            <form action="{{ route('expenses.store') }}" method="POST">
+                @csrf
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label for="today_date" class="form-label">Date</label>
+                        <input type="date" name="today_date" id="today_date" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" name="description" id="description" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category" id="category" class="form-select" required>
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" step="0.01" name="amount" id="amount" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- Current Month Expenses -->

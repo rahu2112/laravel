@@ -15,9 +15,9 @@ return new class extends Migration
 
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('totalbalance', 10, 2)->default(0);
+            $table->decimal('total_balance', 10, 2)->default(0);
             $table->string('note')->nullable();
-            $table->decimal('totalincome', 10, 2)->default(0);
+            $table->decimal('total_income', 10, 2)->default(0);
             $table->string('source')->nullable();
             $table->date('from_date')->nullable();
             $table->date('to_date')->nullable();
