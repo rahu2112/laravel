@@ -4,6 +4,7 @@ use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ExpenseController;
 
 //login first
 Route::get('/', function () {
@@ -22,15 +23,16 @@ Route::middleware('auth')->group(function () {
 
 
 // index page
-Route::get('/index', function () {
-    return view('index');
+
+Route::get('/', [ExpenseController::class, 'index'])->name('home');
+// register
+
+Route::get('/register', [RegisterController::class, 'showForm']);
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
+
+//expence
+
+Route::middleware(['auth'])->group(function() {
+    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 });
-
-// register 
-
-
-
-// Show 
-Route::get('/register', [RegisterController::class, 'register'])->name('register ');
-//  submit
-Route::post('/register', [RegisterController::class, 'register'])->name('register');

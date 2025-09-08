@@ -7,25 +7,44 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    // Show login form
     public function loginform()
     {
-        return view('auth.login');
+        return view('auth.login'); // login.blade.php
     }
+
+    // Handle login
     public function login(Request $request)
     {
-        $user = $request->only('email', 'password');
+        // Validate inputs
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (Auth::attempt($user)) {
+        // Credentials array
+        $credentials = $request->only('email', 'password');
+
+        // Attempt login
+        if (Auth::attempt($credentials)) {
+            // Regenerate session
             $request->session()->regenerate();
+
+            // Redirect to intended page or dashboard
             return redirect()->intended('index');
         }
+
+        // If login fails
         return back()->withErrors([
             'email' => 'Invalid email or password.',
-        ]);
-        }
-        public function logout(Request $request)
+        ])->onlyInput('email'); // preserve email input
+    }
+
+    // Logout
+    public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
