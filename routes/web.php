@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [ExpenseController::class, 'index'])->name('home');
 // register
 
-Route::get('/register', [RegisterController::class, 'showForm']);
+Route::get('/register', [RegisterController::class, 'showform']);
 Route::post('/register', [RegisterController::class, 'store'])->name('register');
 
 //expence
