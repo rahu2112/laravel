@@ -33,6 +33,6 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register')
 //expence
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
-    Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+    Route::get('/', [ExpenseController::class, 'index'])->name('index');
+    Route::post('/expence', [ExpenseController::class, 'store'])->name('expence.store');
 });

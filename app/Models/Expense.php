@@ -14,15 +14,15 @@ class Expense extends Model
 
     protected $fillable = [
         'user_id',
+        'total_balance',
+        'note',
+        'total_income',
+        'source',
+        'from_date',
+        'to_date',
         'today_date',
         'description',
         'category',
         'amount',
-        'total_balance',
-        'total_income',
-        'note',
-        'source',
-        'from_date',
-        'to_date',
     ];
 }

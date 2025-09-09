@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('expenses', function (Blueprint $table) {
-
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('total_balance', 10, 2)->default(0);
+
+            // foreign key with register table
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('register')
+                ->onDelete('cascade');
+
+            $table->decimal('balance', 10, 2)->default(0);
             $table->string('note')->nullable();
             $table->decimal('total_income', 10, 2)->default(0);
             $table->string('source')->nullable();
@@ -25,6 +31,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('category')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
+
             $table->timestamps();
         });
     }
